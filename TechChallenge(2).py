@@ -4,6 +4,7 @@
 #pip install yfinance
 #pip install plotly
 #pip install matplotlib
+#pip install statsmodels
 #streamlit run TechChallenge.py
 # ==============================================================================
 #Origem dos dados
