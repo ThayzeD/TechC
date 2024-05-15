@@ -5,19 +5,11 @@
 #pip install plotly
 #pip install matplotlib
 #pip install statsmodels
-#pip install phophet
+#pip install prophet
 #pip install keras
 #pip install sklearn
 #streamlit run TechChallenge.py
 # ==============================================================================
-#Import
-pip install yfinance
-pip install plotly
-pip install matplotlib
-pip install statsmodels
-pip install phophet
-pip install keras
-pip install sklearn
 
 #Origem dos dados
 import yfinance as yf
