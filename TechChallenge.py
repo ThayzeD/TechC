@@ -1,14 +1,26 @@
 #python -m venv techchallenge
 #techchallenge/Scripts/activate
+#pip install -r requirements.txt
+#pip install yfinance
+#pip install plotly
+#pip install matplotlib
+#pip install statsmodels
+#pip install prophet
+#pip install keras
+#pip install scikit-learn
+#pip install tensorflow
 #streamlit run TechChallenge.py
 # ==============================================================================
+
 #Origem dos dados
 import yfinance as yf
 
 # Data manipulation
 # ==============================================================================
+import streamlit as st
 import pandas as pd
 import numpy as np
+
 from datetime import date
 from datetime import timedelta
 
@@ -20,8 +32,6 @@ import matplotlib.pyplot as plt
 plt.style.use('fivethirtyeight')
 plt.rcParams['lines.linewidth'] = 2
 plt.rcParams['font.size'] = 10
-
-import streamlit as st
 
 #Page config
 def wide_space_default():
@@ -37,7 +47,20 @@ def cria_grafico( df1, df2, df3, df4, titulo, fixa_data, len_fixa_data):
     else:
       dt_ini = df1.index[:1]
 
-    dt_fim = df1.index[-1:]
+    dt_ini = dt_ini[0].strftime('%Y-%m-%d')
+    List_dt_fim=[]
+    List_dt_fim.append(df1.tail(1).index.values)
+    if df2.shape[0] != 0 :
+      List_dt_fim.append(df2.tail(1).index.values)
+    if df3.shape[0] != 0 :
+      List_dt_fim.append(df3.tail(1).index.values)
+    if df4.shape[0] != 0 :
+      List_dt_fim.append(df4.tail(1).index.values)
+
+    df_dt_fim =pd.DataFrame(List_dt_fim)
+    dt_fim = df_dt_fim.describe().loc['max'][0]
+    dt_fim = pd.to_datetime(str(dt_fim))
+    dt_fim.strftime('%Y-%m-%d')
 
     layout = go.Layout(
                     title = titulo,
@@ -77,10 +100,9 @@ def cria_grafico( df1, df2, df3, df4, titulo, fixa_data, len_fixa_data):
                 dict(step="all")
                         ])
             ),
-        range=(dt_ini[0].strftime('%Y-%m-%d'), dt_fim[0].strftime('%Y-%m-%d'))
+        range=(dt_ini, dt_fim)
     )
     return fig
-
 
 st.title('Tech Challenge - DTAT2 - Grupo 56 - Análise Petroleo Brent')
 st.image('cabeçalho.jpg')
@@ -585,6 +607,7 @@ while (len(na)+1) <= du :
     na.append(prev_fim)
 
 df_dt_futura = pd.DataFrame({"Date":na})
+df_dt_futura = df_dt_futura.set_index(pd.DatetimeIndex(df_dt_futura['Date']))
 
 #Cria um segundo DF para unir as cotações correntes e as previsões das ações
 df_cotacao_futura = pd.DataFrame({"Date":df_cotacoes.index.values})
@@ -655,43 +678,39 @@ prev_generator = TimeseriesGenerator(close_prev_lstm, close_prev_lstm, length=lo
 previsions_lstm = model.predict(prev_generator)
 prev_lstm = previsions_lstm.reshape((-1))
 
-
 prev_lstm_inv = scaler.inverse_transform(prev_lstm.reshape(-1, 1))
 df_LSTM_prev_g = pd.DataFrame(data=prev_lstm_inv, columns = [indice], index= df_cotacao_futura[-prev_lstm_inv.size:]['Date'])
 
-df = df_dt_futura['Date'][-1:].values
-di = df_cotacoes.index[-(steps+du+look_back):]
+df1 = pd.DataFrame(df_cotacoes)
+df1.rename(columns={indice: 'Dados Históricos'}, inplace = True)
+df2 = pd.DataFrame(df_LSTM_pred_g)
+df2.rename(columns={indice: 'Predição - LSTM'}, inplace = True)
+df3 = pd.DataFrame(data= df_LSTM_prev_g[indice][-df_dt_futura.size:].values, index=df_dt_futura.index.values, columns=['Previsão'] )
+df4 = pd.DataFrame(data=[])
 
-layoutPREV= go.Layout(
-                  title = 'Previsões - Petróleo Brent - Próximos 10 dias',
-                  titlefont = dict(size=20))
-
-figPrev = go.Figure(layout=layoutPREV)               
-figPrev.add_trace(go.Scatter(x=df_cotacoes.index.values, y=df_cotacoes[indice].values,
-                      mode='lines',
-                      name='Dados Históricos'))
-
-figPrev.add_trace(go.Scatter(x=df_LSTM_pred_g.index.values, y=df_LSTM_pred_g[indice].values,
-                    mode='lines',
-                    name='Predição'))
-figPrev.add_trace(go.Scatter(x=df_dt_futura['Date'] , y=df_LSTM_prev_g[indice].values,
-                      mode='lines',
-                     name='Previsão'))
-
-  
-
-figPrev.update_xaxes(
-      rangeslider_visible=True,
-      rangeselector=dict(
-          buttons=list([
-              dict(count=1, label="1m", step="month", stepmode="backward"),
-              dict(count=6, label="6m", step="month", stepmode="backward"),
-              dict(count=1, label="YTD", step="year", stepmode="todate"),
-              dict(count=1, label="1y", step="year", stepmode="backward"),
-              dict(step="all")
-          ])
-      ),
-      range=(di[0].strftime('%Y-%m-%d'), df[0].strftime('%Y-%m-%d'))
-  )
-
+figPrev = cria_grafico(df1, df2,df3,df4,'Previsões - Petróleo Brent - Próximos 10 dias', 1,steps+du+look_back )
 st.plotly_chart(figPrev, use_container_width=True)
+
+st.write("Listando as Previsões:")
+st.write(df3)
+
+
+st.divider()  
+st.subheader('Fontes:')
+st.write(" https://www.suapesquisa.com/geografia/petroleo/ ")
+st.write(" https://www.suno.com.br/artigos/cotacao-do-petroleo/")
+st.write(" https://www.bbc.com/portuguese/articles/cnk0e0yydelo")
+st.write(" https://www.wilsonsons.com.br/pt-br/blog/maiores-produtores-de-petroleo-do-mundo/")
+st.write(" https://investnews.com.br/infograficos/industria-do-petroleo-quem-produz-quem-compra-e-maiores-reservas/")
+st.write(" https://www.bbc.com/portuguese/noticias/2011/02/110224_libia_petroleo_precos_fn")
+st.write(" https://pt.wikipedia.org/wiki/Crise_L%C3%ADbia_(2011%E2%80%93presente)#:~:text=A%20atual%20crise%20na%20L%C3%ADbia,frac%C3%A7%C3%A3o%20do%20seu%20n%C3%ADvel%20normal.")
+st.write(" https://www.bbc.com/portuguese/noticias/2011/02/110216_libia_petroleo_jf")
+st.write(" https://g1.globo.com/economia/noticia/2016/01/barril-de-petroleo-da-opep-cai-para-us-25-o-menor-preco-em-12-anos.html")
+st.write(" https://g1.globo.com/economia/noticia/2018/10/01/precos-do-petroleo-sobem-para-maximas-desde-2014-com-acordo-sobre-nafta-e-sancoes-contra-ira.ghtml")
+st.write(" https://noticias.uol.com.br/ultimas-noticias/afp/2018/08/07/eua-impoem-sancoes-ao-ira-6-pontos-para-entender-a-crise.htm")
+st.write(" https://noticias.uol.com.br/ultimas-noticias/deutschewelle/2020/04/21/por-que-o-preco-do-petroleo-despencou.htm")
+st.write(" https://www1.folha.uol.com.br/mercado/2020/03/com-coronavirus-petroleo-brent-cai-ao-menor-patamar-em-17-anos.shtml ")
+st.write(" https://noticias.uol.com.br/ultimas-noticias/afp/2022/03/08/petroleo-sobe-545-na-europa-alavancada-por-proximas-sancoes-dos-eua-a-russia.htm ")
+st.write(" https://www.zuldigital.com.br/blog/guerra-ucrania-preco-combustivel-brasil/ ")
+
+
