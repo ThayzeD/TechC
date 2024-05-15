@@ -1,6 +1,6 @@
 #python -m venv techchallenge
 #techchallenge/Scripts/activate
-#pip install requirements.txt
+#pip install streamlit
 #streamlit run TechChallenge.py
 # ==============================================================================
 #Origem dos dados
