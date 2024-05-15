@@ -4,8 +4,6 @@
 #streamlit run TechChallenge.py
 # ==============================================================================
 #Origem dos dados
-pip install yfinance
-
 import yfinance as yf
 
 # Data manipulation
