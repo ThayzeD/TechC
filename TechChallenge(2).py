@@ -8,6 +8,7 @@
 #pip install prophet
 #pip install keras
 #pip install sklearn
+#pip install tensorflow
 #streamlit run TechChallenge.py
 # ==============================================================================
 
