@@ -1,15 +1,15 @@
-#python -m venv techchallenge
-#techchallenge/Scripts/activate
-#pip install -r requirements.txt
-#pip install yfinance
-#pip install plotly
-#pip install matplotlib
-#pip install statsmodels
-#pip install prophet
-#pip install keras
-#pip install scikit-learn
-#pip install tensorflow
-#streamlit run TechChallenge.py
+python -m venv techchallenge
+techchallenge/Scripts/activate
+pip install -r requirements.txt
+pip install yfinance
+pip install plotly
+pip install matplotlib
+pip install statsmodels
+pip install prophet
+pip install keras
+pip install scikit-learn
+pip install tensorflow
+streamlit run TechChallenge.py
 # ==============================================================================
 
 #Origem dos dados
