@@ -1,3 +1,4 @@
+cd myproject
 python -m venv techchallenge
 techchallenge/Scripts/activate
 pip install -r requirements.txt
