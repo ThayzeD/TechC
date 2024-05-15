@@ -5,6 +5,9 @@
 #pip install plotly
 #pip install matplotlib
 #pip install statsmodels
+#pip install phophet
+#pip install keras
+#pip install sklearn
 #streamlit run TechChallenge.py
 # ==============================================================================
 #Origem dos dados
