@@ -1,13 +1,17 @@
 #python -m venv techchallenge
 #techchallenge/Scripts/activate
-#pip install streamlit
-#streamlit run TechChallenge(2).py
+#pip install -r requirements.txt
+#streamlit run TechChallenge.py
 # ==============================================================================
+#Origem dos dados
+import yfinance as yf
+
 # Data manipulation
 # ==============================================================================
 import streamlit as st
 import pandas as pd
 import numpy as np
+
 from datetime import date
 from datetime import timedelta
 
