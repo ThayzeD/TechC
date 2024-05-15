@@ -3,12 +3,9 @@
 #pip install streamlit
 #streamlit run TechChallenge(2).py
 # ==============================================================================
-import streamlit as st
-#Origem dos dados
-import yfinance as yf
-
 # Data manipulation
 # ==============================================================================
+import streamlit as st
 import pandas as pd
 import numpy as np
 from datetime import date
