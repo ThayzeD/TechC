@@ -1,6 +1,9 @@
 #python -m venv techchallenge
 #techchallenge/Scripts/activate
 #pip install -r requirements.txt
+#pip install yfinance
+#pip install plotly
+#pip install matplotlib
 #streamlit run TechChallenge.py
 # ==============================================================================
 #Origem dos dados
