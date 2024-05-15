@@ -1,7 +1,9 @@
 cd myproject
 python -m venv techchallenge
 techchallenge/Scripts/activate
-pip install -r requirements.txt
+pip install streamlit
+pip install pandas
+pip instal numpy
 pip install yfinance
 pip install plotly
 pip install matplotlib
