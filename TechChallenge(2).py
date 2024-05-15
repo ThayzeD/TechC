@@ -7,7 +7,7 @@
 #pip install statsmodels
 #pip install prophet
 #pip install keras
-#pip install sklearn
+#pip install scikit-learn
 #pip install tensorflow
 #streamlit run TechChallenge.py
 # ==============================================================================
