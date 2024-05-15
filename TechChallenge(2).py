@@ -1,8 +1,9 @@
 #python -m venv techchallenge
 #techchallenge/Scripts/activate
 #pip install streamlit
-#streamlit run TechChallenge.py
+#streamlit run TechChallenge(2).py
 # ==============================================================================
+import streamlit as st
 #Origem dos dados
 import yfinance as yf
 
@@ -21,8 +22,6 @@ import matplotlib.pyplot as plt
 plt.style.use('fivethirtyeight')
 plt.rcParams['lines.linewidth'] = 2
 plt.rcParams['font.size'] = 10
-
-import streamlit as st
 
 #Page config
 def wide_space_default():
