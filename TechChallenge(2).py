@@ -699,7 +699,7 @@ st.subheader('Considerações:')
 st.write("Com base nos resultados obtidos e nas análises realizadas, podemos observar elaborar sobre o desempenho dos modelos de previsão de séries temporais:")
 st.write("Ao comparar os modelos ARIMA e LSTM, observamos que o ARIMA consegue acompanhar melhor os picos e vales, enquanto o LSTM tende a suavizar as variações, apresentando previsões mais estáveis, entretanto, menos responsivas às mudanças rápidas no índice.")
 st.write("O modelo Prophet, todavia, não obteve resultados tão precisos quanto os modelos ARIMA e LSTM. Suas previsões apresentaram um maior desvio dos valores reais.")
-st.write("A análise de acertos percentuais mostrou que o modelo ARIMA teve um desempenho superior ao LSTM na previsão do movimento de valorização e desvalorização. Para tanto, embora o LSTM tenha demostrado potencial, o ARIMA apresentou maior precisão e capacidade de seguir as tendências diárias do mercado.")
+st.write("A análise de acertos percentuais mostrou que o modelo ARIMA teve um desempenho superior ao LSTM na previsão do movimento de valorização e desvalorização. Para tanto, embora o LSTM tenha demostrado potencial, o ARIMA com os indicadores de desempenho como MAE, MSE, RMSE, MAPE e R² mostram que o ARIMA conseguiu prever os valores com uma precisão maior e capacidade de seguir as tendências diárias do mercado.")
 
 st.divider()  
 st.subheader('Fontes:')
